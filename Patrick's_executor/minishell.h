@@ -6,7 +6,7 @@
 /*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:22:17 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/07 15:06:17 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:15:00 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,14 @@ extern t_global	g_global;
 
 #endif
 
-
+typedef enum s_tokens
+{
+	PIPE = 1,
+	GREAT,
+	GREAT_GREAT,
+	LESS,
+	LESS_LESS,
+}	t_tokens;
 
 typedef struct s_lexer
 {
