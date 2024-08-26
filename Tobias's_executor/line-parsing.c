@@ -18,12 +18,50 @@
 #include <string.h>
 #include <unistd.h>
 
-typedef struct s_export
+typedef enum s_tokens
 {
-	char		*Name;
-	char		*Val;
-	int 		empty;
-}				t_export;
+	PIPE = 1,
+	LESSLESS,
+	LESS,
+	GREAT,
+	GREATGREAT
+}				t_tokens;
+
+typedef struct s_lexer
+{
+	char			*str;
+	t_tokens		token;
+	int				i;
+	struct s_lexer	*next;
+	struct s_lexer	*prev;
+}	t_lexer;
+
+typedef struct s_simple_cmds
+{
+	char					**str;
+	int						(*builtin)(t_tools *, struct s_simple_cmds *);
+	int						num_redirections;
+	char					*hd_file_name;
+	t_lexer					*redirections;
+	struct s_simple_cmds	*next;
+	struct s_simple_cmds	*prev;
+}	t_simple_cmds;
+
+typedef struct s_tools
+{
+	char					*args;
+	char					**paths;
+	char					**envp;
+	char    				**export;
+	struct s_simple_cmds	*simple_cmds;
+	t_lexer					*lexer_list;
+	char					*pwd;
+	char					*old_pwd;
+	int						pipes;
+	int						*pid;
+	bool					heredoc;
+	bool					reset;
+}	t_tools;
 
 size_t	ft_strlcpy(char *d, const char *s, size_t n)
 {
@@ -123,7 +161,7 @@ int	get_args_loop(char *command_line, int i, int *quote_lock, char **args)
 				while (*command_line == 32)
 					command_line++;
 		}
-		args[i] = (char *)calloc(command_line - start + 2, 1);
+		args[i] = (char *)ft_calloc(command_line - start + 2, 1);
 		if (args[i] == NULL)
 			return (ft_free(args, i), 1);
 		ft_strlcpy(args[i], start, (command_line - start) + 1);
@@ -142,7 +180,7 @@ char	**get_args(char *command_line)
 	i = count_args(command_line);
 	if (i == -1)
 		return (NULL);
-	args = (char **)calloc((i + 1), sizeof(char *));
+	args = (char **)ft_calloc((i + 1), sizeof(char *));
 	if (args == NULL)
 		return (NULL);
 	args[i] = NULL;
@@ -272,7 +310,7 @@ char	*rem_quotes_loop(char *line)
 	int		quote_lock;
 	char	*temp;
 
-	temp = (char *)calloc(quote_count_line(line) + 1, 1);
+	temp = (char *)ft_calloc(quote_count_line(line) + 1, 1);
 	if (temp == NULL)
 		return (NULL);
 	i = 0;
@@ -309,7 +347,124 @@ char	**rem_quotes(char **args)
 	return (args);
 }
 
-int	command_parsing(char *command_line, t_list *export)
+char **append_map(char **map, char *str)
+{
+	int i;
+	char **new;
+
+	i = 0;
+	while(map[i])
+		i++;
+	new = malloc(sizeof(char*)*(i+2));
+	i = 0;
+	while(map[i])
+		new[i]=map[i++];
+	new[i]=str;
+	free(map);
+	return(new);
+}
+
+int not_first_lexer(t_tools *tools, args, i)
+{
+	t_lexer *lexer;
+	t_lexer new;
+	lexer = tools->lexer_list;
+	t_lexer *lexer;
+	lexer = tools->lexer_list;
+	while(lexer->next)
+		lexer = lexer->next;
+	new = malloc(sizeof(t_lexer));
+	lexer->next = &new;
+	if(i=-1)
+		return(new.token = PIPE, 0);
+	else if(!ft_strncmp(args[i], "<", 2)) 
+		new.token = LESS;
+	else if(!ft_strncmp(args[i], ">", 2)) 
+		new.token = GREAT;
+	else if(!ft_strncmp(args[i], "<<", 3)) 
+		new.token = LESSLESS;
+	else if(!ft_strncmp(args[i], ">>", 3))
+		new.token = GREATGREAT;
+	else
+		new.str = rem_quotes_loop(args[i]);
+	if(!new.str)
+		add_lexer(tools, args, i+1);
+	return(1);
+}
+
+int add_lexer(t_tools *tools, args, i)
+{
+	t_lexer *lexer;
+	lexer = tools->lexer_list;
+	while(lexer->next)
+		lexer = lexer->next;
+	if(!lexer->token && !lexer->str)
+		return(not_first_lexer(tools, args, i));
+	while(lexer->next)
+		lexer = lexer->next;
+	if(i=-1)
+		return(lexer->token = PIPE, 0);
+	else if(!ft_strncmp(args[i], "<", 2)) 
+		lexer->token = LESS;
+	else if(!ft_strncmp(args[i], ">", 2)) 
+		lexer->token = GREAT;
+	else if(!ft_strncmp(args[i], "<<", 3)) 
+		lexer->token = LESSLESS;
+	else if(!ft_strncmp(args[i], ">>", 3))
+		lexer->token = GREATGREAT;
+	else
+		lexer->str = rem_quotes_loop(args[i]);
+	if(!lexer->str)
+		add_lexer(tools, args, i+1);
+	return(0);
+}
+
+char **add_pipe(t_tools *tools)
+{
+	t_simple_cmds *cmds;
+	t_simple_cmd new;
+
+	char **ret;
+	
+	cmds = tools->simple_cmds;
+	while(cmds->next)
+		cmds = cmds->next;
+	new = malloc(sizeof(t_simple_cmds));
+	cmds->next = &new;
+	add_lexer(t_tools *tools, NULL, -1);
+	ret = ft_calloc(1, sizeof(char*));
+	return ret;
+}
+
+int put_into_tools(char**args, t_tools *tools)
+{
+	int i;
+	t_simple_cmds cmds;
+	t_lexer lexer;
+	char **map;
+	
+	map = ft_calloc(1, sizeof(char*));
+	cmds = malloc(sizeof(t_simple_cmds));
+	cmds.str=map;
+	lexer = malloc(sizeof(t_lexer));
+	tools->simple_cmds = &cmds;
+	tools->lexer_list = &lexer;
+	i = -1;
+	while(args[++i])
+	{
+		if(!ft_strncmp(args[i], "<", 2), !ft_strncmp(args[i], ">", 2)) 
+			add_lexer(t_tools *tools, args, i);
+		else if(!ft_strncmp(args[i], "<<", 3), !ft_strncmp(args[i], ">>", 3))
+			add_lexer(t_tools *tools, args, i);
+		else if(!ft_strncmp(args[i], "|", 2))
+			map = add_pipe(tools);
+		else
+			map = append_map(map, rem_quotes_loop(args[i]));
+	}
+	return(0);
+}
+
+int	command_parsing(char *command_line, t_tools *tools)
 {
 	int		i;
 	char	**args;
@@ -317,14 +472,13 @@ int	command_parsing(char *command_line, t_list *export)
 	args = get_args(command_line);
 	if (args == NULL)
 		return (1);
-	i = change_vars(args, export);
+	i = change_vars(args, t_tools->export);
 	if (i == 1)
 		return (1);
 	args = rem_quotes(args);
 	if (args == NULL)
 		return (1);
-	//io_handler
-	// printf("%d\n", count_args(command_line));
+	put_into_tools(args, tools);
 	i = 0;
 	while (args[i])
 	{
@@ -334,39 +488,16 @@ int	command_parsing(char *command_line, t_list *export)
 	return (ft_free(args, -1), 0);
 }
 
-int get_envp_size(char **envp);
-int rem_var_export(t_list *export, char *var);
-int add_var_export(t_list *export, char *var, char *val);
+
 
 int	main(int argc, char**argv, char**env)
 {
 	char	*line;
 	
-	t_list *exp;
-	char **exp
-	
-	/*t_export *test;
-	int i = 0;
-	char **envp = malloc((get_envp_size(env)+1)*sizeof(char));
-	while(env[i])
-	{
-		envp[i]=ft_strdup(env[i]);
-		i++;
-	}
-	envp[i]=NULL;
-	test->Name = ft_strdup("OLDPWD");
-	test->Val = NULL;
-	test->empty = 1;
-	exp = ft_lstnew(test);
-	add_var_export(exp, ft_strdup("PWD"), ft_strdup("YOLO!"));
-	add_var_export(exp, ft_strdup("PWD"), ft_strdup("YOLO!"));
-	add_var_export(exp, ft_strdup("A"), ft_strdup("First!"));
-	add_var_export(exp, ft_strdup("a"), ft_strdup("Last!"));
-	add_var_export(exp, ft_strdup("Check"), ft_strdup("S!"));
-	add_var_export(exp, ft_strdup("Ass"), NULL); */
+	t_tools *tools;
 
 	line = readline("minishell> ");
-	return (command_parsing(line, exp));
+	return (command_parsing(line, tools));
 }
 
 /*
