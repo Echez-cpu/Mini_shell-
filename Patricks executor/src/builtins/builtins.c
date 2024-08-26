@@ -6,7 +6,7 @@
 /*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:22:28 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/26 11:42:33 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/08/26 20:01:25 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd)
 		if (str)
 		{
 			if (!ft_strncmp(builtins[i][0], str, ft_strlen((builtins[i][0]))))
-				return (builtins[i][1]);
+			 {
+				if (ft_strlen(builtins[i][0]) == ft_strlen(str))
+				     return (builtins[i][1]);
+			 }
 		}
 		i++;
 	}
