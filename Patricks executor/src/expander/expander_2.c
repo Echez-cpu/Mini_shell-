@@ -6,7 +6,7 @@
 /*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 12:20:18 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/26 15:28:04 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:56:50 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ char	*expand_variable(t_tools *tools, char *str, int dollar_pos)
 	}
 	return (str);
 }
-
-
 
 static char	*handle_quote(char *str)
 {

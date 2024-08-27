@@ -6,7 +6,7 @@
 /*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:33:59 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/24 20:16:58 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/08/27 13:49:52 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 
 t_tokens	check_token(int c)
 {
-	int	i;
+	int			i;
+	static int	token_arr[3][2] = {{'|', PIPE}, {'>', GREAT}, {'<', LESS},};
 
-	static int token_arr[3][2] = {
-		{'|', PIPE},
-		{'>', GREAT},
-		{'<', LESS},
-	};
 	i = 0;
 	while (i < 3)
 	{

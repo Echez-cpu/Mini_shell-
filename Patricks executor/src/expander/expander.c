@@ -6,7 +6,7 @@
 /*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:29:47 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/26 15:26:22 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:56:31 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	loop_if_dollar_sign(t_tools *tools, char *str, char **tmp, int j)
 		ret = after_dol_lenght(str, j) - j;
 	return (ret);
 }
-
 
 char	*expander_str(t_tools *tools, char *str)
 {

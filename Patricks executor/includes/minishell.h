@@ -6,7 +6,7 @@
 /*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:21:19 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/26 12:46:57 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:30:38 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*delete_quotes_export(char *str, char c);
 int		question_mark(char **tmp);
 void	free_arr(char **arr);
 char	*detect_dollar_sign(t_tools *tools, char *str);
-int	loop_if_dollar_sign(t_tools *tools, char *str, char **tmp, int j);
+int		loop_if_dollar_sign(t_tools *tools, char *str, char **tmp, int j);
 int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd);
 
 typedef struct s_quote_state

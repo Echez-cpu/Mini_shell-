@@ -6,7 +6,7 @@
 /*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 12:10:07 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/26 13:41:40 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:46:17 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	handle_digit_after_dollar(int j, char *str)
 	}
 	return (j - i);
 }
-
 
 char	*process_quotes(char *str, t_quote_state *state)
 {

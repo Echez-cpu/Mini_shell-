@@ -6,7 +6,7 @@
 /*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:35:06 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/24 20:23:03 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/08/27 13:30:35 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	parse_envp(t_tools *tools)
 	while (tools->paths[i])
 	{
 		if (ft_strncmp(&tools->paths[i][ft_strlen(tools->paths[i]) - 1], "/",
-				1) != 0)
+			1) != 0)
 		{
 			tmp = ft_strjoin(tools->paths[i], "/");
 			free(tools->paths[i]);
