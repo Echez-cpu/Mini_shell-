@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:21:37 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/26 11:25:50 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/04 21:17:38 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_tools
 	char					*args;
 	char					**paths;
 	char					**envp;
+	char					**export;
 	struct s_simple_cmds	*simple_cmds;
 	t_lexer					*lexer_list;
 	char					*pwd;
