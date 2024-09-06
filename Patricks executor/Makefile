@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+         #
+#    By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 17:48:03 by pokpalae          #+#    #+#              #
-#    Updated: 2024/08/26 12:42:26 by pokpalae         ###   ########.fr        #
+#    Updated: 2024/09/05 18:52:04 by tlaukat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ src = src/main.c \
 	src/builtins/mini_echo.c \
 	src/builtins/mini_env.c \
 	src/builtins/mini_exit.c \
+	src/builtins/mini_export_utils.c \
 	src/builtins/mini_export.c \
 	src/builtins/mini_pwd.c \
 	src/builtins/mini_unset.c \

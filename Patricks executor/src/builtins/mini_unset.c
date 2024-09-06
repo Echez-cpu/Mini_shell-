@@ -3,54 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   mini_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:24:47 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/24 20:14:00 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/06 23:12:51 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-char	**whileloop_del_var(char **arr, char **rtn, char *str)
+char	**del_var_unset(char **arr, char *var)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		pos;
+	char	**new_arr;
+	char	*tmp;
 
-	i = 0;
-	j = 0;
-	while (arr[i] != NULL)
+	i = -1;
+	write(1, "here1\n", 6);
+	tmp = ft_strjoin(var, "=");
+	pos = is_var_in_envp(arr, tmp) - 1;
+	if (pos == -1)
+		return (NULL);
+	write(1, "here2\n", 6);
+	new_arr = (char **)malloc((get_envp_size(arr)) * sizeof(char *));
+	while (++i < pos)
+		new_arr[i] = arr[i];
+	while (i < get_envp_size(arr) - 1)
 	{
-		if (!(ft_strncmp(arr[i], str, equal_sign(arr[i]) - 1) == 0
-				&& str[equal_sign(arr[i])] == '\0'
-				&& arr[i][ft_strlen(str)] == '='))
-		{
-			rtn[j] = ft_strdup(arr[i]);
-			if (rtn[j] == NULL)
-			{
-				free_arr(rtn);
-				return (rtn);
-			}
-			j++;
-		}
+		new_arr[i] = arr[i + 1];
 		i++;
 	}
-	return (rtn);
-}
-
-char	**del_var(char **arr, char *str)
-{
-	char	**rtn;
-	size_t	i;
-
-	i = 0;
-	while (arr[i] != NULL)
-		i++;
-	rtn = ft_calloc(sizeof(char *), i + 1);
-	if (!rtn)
-		return (NULL);
-	rtn = whileloop_del_var(arr, rtn, str);
-	return (rtn);
+	write(1, "here3\n", 6);
+	free(arr[pos]);
+	new_arr[i] = NULL;
+	free(tmp);
+	return (new_arr);
 }
 
 int	unset_error(t_simple_cmds *simple_cmd)
@@ -85,14 +73,31 @@ int	unset_error(t_simple_cmds *simple_cmd)
 int	mini_unset(t_tools *tools, t_simple_cmds *simple_cmd)
 {
 	char	**tmp;
+	char	**args_env;
+	char	**args_exp;
+	int		i;
 
+	i = 0;
 	if (unset_error(simple_cmd) == 1)
 		return (EXIT_FAILURE);
-	else
+	args_env = ft_arrdup(tools->envp);
+	args_exp = ft_arrdup(tools->export);
+	free(tools->envp);
+	free(tools->export);
+	while (simple_cmd->str[++i])
 	{
-		tmp = del_var(tools->envp, simple_cmd->str[1]);
-		free_arr(tools->envp);
-		tools->envp = tmp;
+		tmp = del_var_unset(args_env, simple_cmd->str[i]);
+		free_arr(args_env);
+		if (tmp != NULL)
+			args_env = tmp;
+		tmp = del_var_unset(args_exp, simple_cmd->str[i]);
+		free_arr(args_exp);
+		if (tmp != NULL)
+			args_exp = tmp;
 	}
+	tools->envp = args_env;
+	tools->export = args_exp;
+	free_arr(args_env);
+	free_arr(args_exp);
 	return (EXIT_SUCCESS);
 }

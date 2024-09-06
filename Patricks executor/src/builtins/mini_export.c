@@ -3,125 +3,119 @@
 /*                                                        :::      ::::::::   */
 /*   mini_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:24:26 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/24 20:13:49 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/05 21:32:10 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtins.h"
 
-int	variable_exist(t_tools *tools, char *str)
+int	is_var_in_export(char **export, char *var)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
-	if (str[equal_sign(str)] == '\"')
-		delete_quotes(str, '\"');
-	if (str[equal_sign(str)] == '\'')
-		delete_quotes(str, '\'');
-	while (tools->envp[i])
+	while (export[i])
 	{
-		if (ft_strncmp(tools->envp[i], str, equal_sign(tools->envp[i])) == 0)
-		{
-			free(tools->envp[i]);
-			tools->envp[i] = ft_strdup(str);
-			return (1);
-		}
+		tmp = get_export_var(export[i]);
+		if (ft_strncmp(tmp, var, ft_strlen(var) + 1) == 0)
+			return (free(tmp), i + 1);
+		free(tmp);
 		i++;
 	}
 	return (0);
 }
 
-int	check_parameter(char *str)
+int	show_exported_variables(char **export)
 {
 	int	i;
 
 	i = 0;
-	if (ft_isdigit(str[0]))
-		return (export_error(str));
-	if (equal_sign(str) == 0)
-		return (EXIT_FAILURE);
-	if (str[0] == '=')
-		return (export_error(str));
-	while (str[i] != '=')
-	{
-		if (check_valid_identifier(str[i]))
-			return (export_error(str));
-		i++;
-	}
-	return (EXIT_SUCCESS);
+	while (export[i])
+		printf("declare -x %s\n", export[i++]);
+	return (0);
 }
 
-char	**whileloop_add_var(char **arr, char **rtn, char *str)
+int	export_variable(char *var, char *val, t_tools *tools)
+{
+	if (!is_var_in_export(tools->export, var) || val)
+		tools->export = add_var_export(tools->export, var, val);
+	else
+		return (0);
+	if (!val)
+		return (0);
+	if (!is_var_in_envp(tools->envp, var))
+		return (tools->envp = add_var_envp(tools->envp, var, val), 0);
+	return (set_val_envp(tools->envp, var, val));
+}
+
+// add Checker: [a-z,A-Z,_][0-9,a-z,A-Z,_]
+//$_ ignorieren, $__ ist ok, $02 ist nicht ok, $1 auch nicht,
+//	andere Zeichen sind auch nicht ok
+
+int	var_is_valid(char *var, char *arg)
 {
 	int	i;
+	int	v;
 
 	i = 0;
-	while (arr[i] != NULL)
+	v = 0;
+	if (var[0] == '_')
 	{
-		if (arr[i + 1] == NULL)
-		{
-			rtn[i] = ft_strdup(str);
-			rtn[i + 1] = ft_strdup(arr[i]);
-		}
+		if (var[1] == 0)
+			v = 2;
+	}
+	else if (!(ft_isalpha(var[0])))
+		v = 1;
+	while (var[++i] && v == 0)
+		if (!(var[i] == '_' || ft_isalnum(var[i])))
+			v = 1;
+	if (v == 1)
+	{
+		printf("%d: %s\n", i, var);
+		printf("export: `%s': not a valid identifier\n", arg);
+	}
+	return (v);
+}
+
+int	export(t_tools *tools, char **args)
+{
+	int		j;
+	int		ret;
+	char	*var;
+	char	*val;
+
+	if (args[1] == NULL)
+		return (show_exported_variables(tools->export));
+	while (++args && args[0])
+	{
+		j = 0;
+		while (args[0][j] != '=' && args[0][j])
+			j++;
+		var = ft_substr(args[0], 0, j);
+		if (args[0][j++])
+			val = ft_substr(args[0], j, ft_strlen(args[0]) - j);
 		else
-			rtn[i] = ft_strdup(arr[i]);
-		if (rtn[i] == NULL)
-		{
-			free_arr(rtn);
-			return (rtn);
-		}
-		i++;
+			val = NULL;
+		if (var_is_valid(var, args[0]) == 0)
+			ret = export_variable(var, val, tools);
+		if (val)
+			free(val);
+		free(var);
 	}
-	return (rtn);
-}
-
-char	**add_var(char **arr, char *str)
-{
-	char	**rtn;
-	size_t	i;
-
-	i = 0;
-	if (str[equal_sign(str)] == '\"')
-		delete_quotes(str, '\"');
-	if (str[equal_sign(str)] == '\'')
-		delete_quotes(str, '\'');
-	while (arr[i] != NULL)
-		i++;
-	rtn = ft_calloc(sizeof(char *), i + 2);
-	if (!rtn)
-		return (NULL);
-	i = 0;
-	whileloop_add_var(arr, rtn, str);
-	return (rtn);
+	return (ret);
 }
 
 int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
 {
-	char	**tmp;
-	int		i;
+	char	**args;
+	int		ret;
 
-	i = 1;
-	if (!simple_cmd->str[1] || simple_cmd->str[1][0] == '\0')
-		mini_env(tools, simple_cmd);
-	else
-	{
-		while (simple_cmd->str[i])
-		{
-			if (check_parameter(simple_cmd->str[i]) == 0
-				&& variable_exist(tools, simple_cmd->str[i]) == 0)
-			{
-				if (simple_cmd->str[i])
-				{
-					tmp = add_var(tools->envp, simple_cmd->str[i]);
-					free_arr(tools->envp);
-					tools->envp = tmp;
-				}
-			}
-			i++;
-		}
-	}
-	return (EXIT_SUCCESS);
+	args = ft_arrdup(simple_cmd->str);
+	ret = export(tools, args);
+	free_arr(args);
+	return (ret);
 }

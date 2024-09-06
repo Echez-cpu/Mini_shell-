@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:29:19 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/24 20:15:28 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/06 21:42:41 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	single_cmd(t_simple_cmds *cmd, t_tools *tools)
 	if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
 		|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
 	{
-		set_error_num(cmd->builtin(tools, cmd));
+		gs_error_num(cmd->builtin(tools, cmd));
 		return ;
 	}
 	send_heredoc(tools, cmd);
@@ -90,5 +90,5 @@ void	single_cmd(t_simple_cmds *cmd, t_tools *tools)
 		handle_cmd(cmd, tools);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		set_error_num(WEXITSTATUS(status));
+		gs_error_num(WEXITSTATUS(status));
 }

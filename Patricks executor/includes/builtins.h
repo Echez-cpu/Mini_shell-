@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:20:34 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/24 21:10:26 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/05 18:48:58 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,17 @@ int		mini_continue(t_tools *tools, t_simple_cmds *simple_cmd);
 
 size_t	equal_sign(char *str);
 int		check_valid_identifier(char c);
+
+// export functions
+char	*get_export_var(char *export_line);
+char	*get_export_val(char *export_line);
+int		is_var_in_export(char **export, char *var);
+char	**add_var_export(char **export, char *var, char *val);
+
+// envp functions
+int		is_var_in_envp(char **envp, char *var);
+int		get_envp_size(char **envp);
+char	**add_var_envp(char **envp, char *var, char *val);
+int		set_val_envp(char **envp, char *var, char *val);
 
 #endif

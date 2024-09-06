@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 17:42:19 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/27 13:35:24 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/06 21:25:11 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	event(void)
 void	sigint_handler(int sig)
 {
 	g_signal_received = sig;
-	if (!get_in_heredoc())
+	if (!gs_in_heredoc(-1))
 		ft_putstr_fd("\n", STDERR_FILENO);
 	if (get_in_cmd())
 	{
-		set_stop_heredoc(1);
+		gs_stop_heredoc(1);
 		rl_replace_line("", 0);
 		rl_redisplay();
 		rl_done = 1;
@@ -44,6 +44,8 @@ void	sigquit_handler(int sig)
 	ft_putnbr_fd(sig, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
+
+// CTRL-Z ???
 
 void	init_signals(void)
 {

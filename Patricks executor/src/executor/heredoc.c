@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:29:32 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/26 11:45:01 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/06 21:42:50 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	create_heredoc(t_lexer *heredoc, bool quotes, t_tools *tools,
 	}
 	line = readline(HEREDOC_MSG);
 	while (line && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str))
-		&& !get_stop_heredoc())
+		&& !gs_stop_heredoc(-1))
 	{
 		if (quotes == false)
 			line = expander_str(tools, line);
@@ -36,7 +36,7 @@ int	create_heredoc(t_lexer *heredoc, bool quotes, t_tools *tools,
 		line = readline(HEREDOC_MSG);
 	}
 	free(line);
-	if (get_stop_heredoc() || !line)
+	if (gs_stop_heredoc(-1) || !line)
 		return (EXIT_FAILURE);
 	close(fd);
 	return (EXIT_SUCCESS);
@@ -49,17 +49,17 @@ int	ft_heredoc(t_tools *tools, t_lexer *heredoc, char *file_name)
 
 	sl = EXIT_SUCCESS;
 	if ((heredoc->str[0] == '\"' && heredoc->str[ft_strlen(heredoc->str)
-				-1] == '\"') || (heredoc->str[0] == '\''
+			- 1] == '\"') || (heredoc->str[0] == '\''
 			&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\''))
 		quotes = true;
 	else
 		quotes = false;
 	delete_quotes(heredoc->str, '\"');
 	delete_quotes(heredoc->str, '\'');
-	set_stop_heredoc(0);
-	set_in_heredoc(1);
+	gs_stop_heredoc(0);
+	gs_in_heredoc(1);
 	sl = create_heredoc(heredoc, quotes, tools, file_name);
-	set_in_heredoc(0);
+	gs_in_heredoc(0);
 	tools->heredoc = true;
 	return (sl);
 }
@@ -93,7 +93,7 @@ int	send_heredoc(t_tools *tools, t_simple_cmds *cmd)
 			sl = ft_heredoc(tools, cmd->redirections, cmd->hd_file_name);
 			if (sl)
 			{
-				set_error_num(1);
+				gs_error_num(1);
 				return (reset_tools(tools));
 			}
 		}

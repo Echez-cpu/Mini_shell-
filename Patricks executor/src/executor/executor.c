@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:29:07 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/24 20:15:21 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/06 21:42:27 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	pipe_wait(int *pid, int amount)
 	}
 	waitpid(pid[i], &status, 0);
 	if (WIFEXITED(status))
-		set_error_num(WEXITSTATUS(status));
+		gs_error_num(WEXITSTATUS(status));
 	return (EXIT_SUCCESS);
 }
 

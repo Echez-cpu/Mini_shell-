@@ -3,16 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 18:09:43 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/24 20:22:55 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/06 22:24:02 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	minishell_loop(t_tools *tools);
+
+int	add_env_to_export(t_tools *tools)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (tools->envp[i])
+	{
+		tmp = ft_strdup(tools->envp[i++]);
+		tools->export = add_var_export(tools->export, tmp, NULL);
+		free(tmp);
+	}
+	return (0);
+}
 
 int	implement_tools(t_tools *tools)
 {
@@ -21,9 +36,9 @@ int	implement_tools(t_tools *tools)
 	tools->reset = false;
 	tools->pid = NULL;
 	tools->heredoc = false;
-	set_stop_heredoc(0);
+	gs_stop_heredoc(0);
 	set_in_cmd(0);
-	set_in_heredoc(0);
+	gs_in_heredoc(0);
 	parse_envp(tools);
 	init_signals();
 	return (1);
@@ -70,6 +85,7 @@ int	minishell_loop(t_tools *tools)
 	if (!tools->args)
 	{
 		ft_putendl_fd("exit", STDOUT_FILENO);
+		free_tools(tools);
 		exit(EXIT_SUCCESS);
 	}
 	if (tools->args[0] == '\0')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:31:00 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/27 13:32:56 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/05 20:58:23 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,13 @@ char	**ft_arrdup(char **arr)
 		}
 		i++;
 	}
+	rtn[i] = NULL;
 	return (rtn);
 }
 
 void	free_arr(char **arr)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (arr[i])

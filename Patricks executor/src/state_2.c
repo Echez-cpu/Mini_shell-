@@ -3,34 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   state_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:42 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/24 20:52:02 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/06 21:24:56 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	g_in_heredoc = 0;
-static int	g_stop_heredoc = 0;
-
-int	get_in_heredoc(void)
+int	gs_in_heredoc(int val)
 {
-	return (g_in_heredoc);
+	static int	g_in_heredoc;
+
+	if (!g_in_heredoc)
+		g_in_heredoc = 0;
+	if (val == -1)
+		return (g_in_heredoc);
+	g_in_heredoc = val;
+	return (0);
 }
 
-int	get_stop_heredoc(void)
+int	gs_stop_heredoc(int val)
 {
-	return (g_stop_heredoc);
-}
+	static int	g_stop_heredoc;
 
-void	set_in_heredoc(int value)
-{
-	g_in_heredoc = value;
-}
-
-void	set_stop_heredoc(int value)
-{
-	g_stop_heredoc = value;
+	if (!g_stop_heredoc)
+		g_stop_heredoc = 0;
+	if (val == -1)
+		return (g_stop_heredoc);
+	g_stop_heredoc = val;
+	return (0);
 }

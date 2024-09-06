@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+         #
+#    By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 15:46:40 by pokpalae          #+#    #+#              #
-#    Updated: 2024/05/23 16:02:11 by pokpalae         ###   ########.fr        #
+#    Updated: 2024/09/05 17:43:59 by tlaukat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,8 +77,11 @@ FTPRINTF_DIR	=	$(SRC_DIR)ft_printf/ft_printf.c \
 					$(SRC_DIR)ft_printf/ft_printf_pointer.c \
 					$(SRC_DIR)ft_printf/ft_printf_unsigned_int.c
 
+GNL_DIR			=	$(SRC_DIR)gnl/get_next_line_bonus.c \
+					$(SRC_DIR)gnl/get_next_line_utils_bonus.c
 
-SRC 			= $(FTIS_DIR) $(FTMEM_DIR) $(FTPUT_DIR) $(FTTO_DIR) $(FTTO_DIR) $(FTSTR_DIR) $(FTLST_DIR) $(FTPRINTF_DIR)
+
+SRC 			= $(FTIS_DIR) $(FTMEM_DIR) $(FTPUT_DIR) $(FTTO_DIR) $(FTTO_DIR) $(FTSTR_DIR) $(FTLST_DIR) $(FTPRINTF_DIR) $(GNL_DIR)
 
 
 OBJ 			= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
