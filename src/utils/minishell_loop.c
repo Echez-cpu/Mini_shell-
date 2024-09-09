@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 18:09:43 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/09 17:46:01 by tlaukat          ###   ########.fr       */
+/*   Updated: 2024/09/09 19:06:09 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	implement_tools(t_tools *tools)
 	tools->reset = false;
 	tools->pid = NULL;
 	tools->heredoc = false;
+	tools->pipes = 0;
 	gs_stop_heredoc(0);
 	gs_in_cmd(0);
 	gs_in_heredoc(0);

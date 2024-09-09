@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 17:42:19 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/09 17:51:37 by tlaukat          ###   ########.fr       */
+/*   Updated: 2024/09/09 23:09:03 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	gs_error_num(130);
 }
 
 void	sigquit_handler(int sig)
@@ -44,8 +45,6 @@ void	sigquit_handler(int sig)
 	ft_putnbr_fd(sig, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
-
-// CTRL-Z ???
 
 void	init_signals(void)
 {

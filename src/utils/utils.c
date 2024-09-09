@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:31:00 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/05 20:58:23 by tlaukat          ###   ########.fr       */
+/*   Updated: 2024/09/09 20:00:31 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	count_quotes(char *line)
 
 	s = 0;
 	d = 0;
-	i = -1;
-	while (line[++i])
+	i = 0;
+	while (line[i++])
 	{
 		if (line[i] == 34)
 			i += find_matching_quote(line, i, &d, 34);
