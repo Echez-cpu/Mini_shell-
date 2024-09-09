@@ -6,7 +6,7 @@
 /*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:29:32 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/06 21:42:50 by tlaukat          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:59:41 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	ft_heredoc(t_tools *tools, t_lexer *heredoc, char *file_name)
 	int		sl;
 
 	sl = EXIT_SUCCESS;
-	if ((heredoc->str[0] == '\"' && heredoc->str[ft_strlen(heredoc->str)
-			- 1] == '\"') || (heredoc->str[0] == '\''
+	if ((heredoc->str[0] == '\"' && heredoc->str[ft_strlen(heredoc->str) \
+			- 1] == '\"') || (heredoc->str[0] == '\'' \
 			&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\''))
 		quotes = true;
 	else

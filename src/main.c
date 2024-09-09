@@ -6,7 +6,7 @@
 /*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:09:04 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/09 01:27:59 by tlaukat          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:56:08 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 1 || argv[1])
 	{
-		printf("\033[1;31mThis program does'nt accept any arguments!\n");
+		printf("\033[1;31mThis program does not accept any arguments!\n");
 		return (1);
 	}
 	tools.envp = ft_arrdup(envp);
