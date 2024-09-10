@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanders_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 17:33:20 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/06 21:44:35 by tlaukat          ###   ########.fr       */
+/*   Updated: 2024/09/10 16:19:04 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 
 int	question_mark(char **tmp)
 {
-	free(*tmp);
-	*tmp = ft_itoa(gs_error_num(-1));
-	return (ft_strlen(*tmp) + 1);
+	char	*nmb;
+	int		size;
+
+	nmb = ft_itoa(gs_error_num(-1));
+	*tmp = gnl_strjoin(*tmp, nmb);
+	size = ft_strlen(nmb);
+	free(nmb);
+	return (size + 1);
 }
