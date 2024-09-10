@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:29:32 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/09 17:59:41 by tlaukat          ###   ########.fr       */
+/*   Updated: 2024/09/10 14:59:16 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	send_heredoc(t_tools *tools, t_simple_cmds *cmd)
 			sl = ft_heredoc(tools, cmd->redirections, cmd->hd_file_name);
 			if (sl)
 			{
-				gs_error_num(1);
+				gs_error_num(130);
 				return (reset_tools(tools));
 			}
 		}
