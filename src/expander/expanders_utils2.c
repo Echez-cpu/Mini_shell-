@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanders_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 17:33:20 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/10 17:01:45 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:06:02 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,22 @@ int	question_mark(char **tmp)
 	size = ft_strlen(nmb);
 	free(nmb);
 	return (size + 1);
+}
+
+size_t	quotes_lenght(char *str)
+{
+	int		i;
+	size_t	ret;
+
+	i = 0;
+	ret = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			ret++;
+		}
+		i++;
+	}
+	return (ret);
 }

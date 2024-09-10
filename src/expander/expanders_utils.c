@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanders_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:29:59 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/08/24 20:16:16 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:05:58 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,41 +47,56 @@ int	after_dol_lenght(char *str, int j)
 	return (i);
 }
 
-size_t	quotes_lenght(char *str)
+int	quote_count_line(char *line)
+{
+	int	n;
+	int	quote_lock;
+
+	n = 0;
+	quote_lock = 0;
+	while (*line)
+	{
+		n++;
+		if (*line == 34 && quote_lock != 1) //"
+		{
+			quote_lock = 2 - quote_lock;
+			n--;
+		}
+		if (*line == 39 && quote_lock != 2) //'
+		{
+			quote_lock = 1 - quote_lock;
+			n--;
+		}
+		line++;
+	}
+	return (n);
+}
+
+char	*delete_quotes(char *line, char c)
 {
 	int		i;
-	size_t	ret;
+	int		skip;
+	int		quote_lock;
+	char	*temp;
 
+	if(c=='"')
+		return(line);
+	temp = (char *)ft_calloc(quote_count_line(line) + 1, 1);
+	if (temp == NULL)
+		return (NULL);
 	i = 0;
-	ret = 0;
-	while (str[i])
+	quote_lock = 0;
+	while (*line)
 	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			ret++;
-		}
-		i++;
+		skip = 0;
+		if (*line == 34 && quote_lock != 1) //"
+			quote_lock = 2 - quote_lock + skip++;
+		if (*line == 39 && quote_lock != 2) //'
+			quote_lock = 1 - quote_lock + skip++;
+		if (!skip)
+			temp[i++] = *line;
+		line++;
 	}
-	return (ret);
+	return (temp);
 }
 
-char	*delete_quotes(char *str, char c)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-		{
-			j = 0;
-			while (str[i + j] == c)
-				j++;
-			ft_strlcpy(&str[i], &str[i + j], strlen(str) - i);
-		}
-		i++;
-	}
-	return (str);
-}
