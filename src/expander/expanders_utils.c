@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanders_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:29:59 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/10 17:05:58 by tlaukat          ###   ########.fr       */
+/*   Updated: 2024/09/10 17:21:40 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ int	quote_count_line(char *line)
 	while (*line)
 	{
 		n++;
-		if (*line == 34 && quote_lock != 1) //"
+		if (*line == 34 && quote_lock != 1)
 		{
 			quote_lock = 2 - quote_lock;
 			n--;
 		}
-		if (*line == 39 && quote_lock != 2) //'
+		if (*line == 39 && quote_lock != 2)
 		{
 			quote_lock = 1 - quote_lock;
 			n--;
@@ -79,8 +79,8 @@ char	*delete_quotes(char *line, char c)
 	int		quote_lock;
 	char	*temp;
 
-	if(c=='"')
-		return(line);
+	if (c == '"')
+		return (line);
 	temp = (char *)ft_calloc(quote_count_line(line) + 1, 1);
 	if (temp == NULL)
 		return (NULL);
@@ -89,9 +89,9 @@ char	*delete_quotes(char *line, char c)
 	while (*line)
 	{
 		skip = 0;
-		if (*line == 34 && quote_lock != 1) //"
+		if (*line == 34 && quote_lock != 1)
 			quote_lock = 2 - quote_lock + skip++;
-		if (*line == 39 && quote_lock != 2) //'
+		if (*line == 39 && quote_lock != 2)
 			quote_lock = 1 - quote_lock + skip++;
 		if (!skip)
 			temp[i++] = *line;
@@ -99,4 +99,3 @@ char	*delete_quotes(char *line, char c)
 	}
 	return (temp);
 }
-
