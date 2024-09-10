@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+         #
+#    By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 17:48:03 by pokpalae          #+#    #+#              #
-#    Updated: 2024/09/09 01:50:15 by tlaukat          ###   ########.fr        #
+#    Updated: 2024/09/10 17:45:21 by pokpalae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ src = src/main.c \
 	src/executor/check_redirections.c \
 	src/executor/executor.c \
 	src/executor/handle_cmd.c \
+	src/executor/handle_cmd2.c \
 	src/executor/heredoc.c \
 	src/executor/executor_utils.c \
 	src/expander/expander.c \

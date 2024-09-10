@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:29:19 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/06 21:42:41 by tlaukat          ###   ########.fr       */
+/*   Updated: 2024/09/10 17:49:40 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,6 @@
 
 char	*join_split_str(char **split_str, char *new_str);
 char	**resplit_str(char **double_arr);
-
-int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
-{
-	int		i;
-	char	*mycmd;
-
-	i = 0;
-	cmd->str = resplit_str(cmd->str);
-	if (!access(cmd->str[0], F_OK))
-		execve(cmd->str[0], cmd->str, tools->envp);
-	while (tools->paths[i])
-	{
-		mycmd = ft_strjoin(tools->paths[i], cmd->str[0]);
-		if (!access(mycmd, F_OK))
-			execve(mycmd, cmd->str, tools->envp);
-		free(mycmd);
-		i++;
-	}
-	return (cmd_not_found(cmd->str[0]));
-}
 
 void	handle_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
