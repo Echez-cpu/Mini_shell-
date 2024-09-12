@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:20:46 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/09 17:55:38 by tlaukat          ###   ########.fr       */
+/*   Updated: 2024/09/12 12:42:08 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define CYAN_BOLD "\033[1;36m"
 # define WHITE_BOLD "\033[1;37m"
 
-# define WELCOME_MSG "\033[1m\033[35mPato team presents: MINISHELL\033[0m\n"
-# define READLINE_MSG "\033[35m Pato'S minishell% \033[32m"
+# define WELCOME_MSG "\033[1m\033[35mPato's team presents: MINISHELL\033[0m\n"
+# define READLINE_MSG "\033[35m Pato's minishell% \033[32m"
 
 #endif
