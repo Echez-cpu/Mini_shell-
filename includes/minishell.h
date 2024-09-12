@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:21:19 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/09 17:56:48 by tlaukat          ###   ########.fr       */
+/*   Updated: 2024/09/12 11:13:40 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
 void	init_signals(void);
 char	*delete_quotes(char *str, char c);
+char	*delete_quotes_2(char *str, char c);
 char	*delete_quotes_export(char *str, char c);
 int		question_mark(char **tmp);
 void	free_arr(char **arr);

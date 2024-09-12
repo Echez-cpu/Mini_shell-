@@ -6,7 +6,7 @@
 /*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:29:32 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/10 14:59:16 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/12 11:24:28 by pokpalae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	ft_heredoc(t_tools *tools, t_lexer *heredoc, char *file_name)
 		quotes = true;
 	else
 		quotes = false;
-	delete_quotes(heredoc->str, '\"');
-	delete_quotes(heredoc->str, '\'');
+	delete_quotes_2(heredoc->str, '\"');
+	delete_quotes_2(heredoc->str, '\'');
 	gs_stop_heredoc(0);
 	gs_in_heredoc(1);
 	sl = create_heredoc(heredoc, quotes, tools, file_name);
