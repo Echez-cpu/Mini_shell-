@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanders_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 20:29:59 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/12 11:06:35 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:49:29 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,55 +47,29 @@ int	after_dol_lenght(char *str, int j)
 	return (i);
 }
 
-int	quote_count_line(char *line)
+char	*delete_quotes(char *str, char c)
 {
-	int	n;
+	int	i;
 	int	quote_lock;
 
-	n = 0;
-	quote_lock = 0;
-	while (*line)
-	{
-		n++;
-		if (*line == 34 && quote_lock != 1)
-		{
-			quote_lock = 2 - quote_lock;
-			n--;
-		}
-		if (*line == 39 && quote_lock != 2)
-		{
-			quote_lock = 1 - quote_lock;
-			n--;
-		}
-		line++;
-	}
-	return (n);
-}
-
-char	*delete_quotes(char *line, char c)
-{
-	int		i;
-	int		skip;
-	int		quote_lock;
-	char	*temp;
-
 	if (c == '"')
-		return (line);
-	temp = (char *)ft_calloc(quote_count_line(line) + 1, 1);
-	if (temp == NULL)
-		return (NULL);
+		return (str);
 	i = 0;
 	quote_lock = 0;
-	while (*line)
+	while (str[i])
 	{
-		skip = 0;
-		if (*line == 34 && quote_lock != 1)
-			quote_lock = 2 - quote_lock + skip++;
-		if (*line == 39 && quote_lock != 2)
-			quote_lock = 1 - quote_lock + skip++;
-		if (!skip)
-			temp[i++] = *line;
-		line++;
+		if (str[i] == '\"' && quote_lock != 1)
+		{
+			ft_strlcpy(&str[i], &str[i + 1], strlen(str) - i);
+			quote_lock = 2 - quote_lock;
+		}
+		else if (str[i] == '\'' && quote_lock != 2)
+		{
+			ft_strlcpy(&str[i], &str[i + 1], strlen(str) - i);
+			quote_lock = 1 - quote_lock;
+		}
+		else
+			i++;
 	}
-	return (temp);
+	return (str);
 }

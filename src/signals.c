@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 17:42:19 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/09 23:09:03 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/14 16:06:49 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,14 @@ void	sigint_handler(int sig)
 
 void	sigquit_handler(int sig)
 {
-	ft_putstr_fd("Quit: ", STDERR_FILENO);
-	ft_putnbr_fd(sig, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
+	gs_error_num(128 + sig);
 }
 
 void	init_signals(void)
 {
 	rl_event_hook = event;
 	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, sigquit_handler);
 	signal(SIGTSTP, SIG_IGN);
 }

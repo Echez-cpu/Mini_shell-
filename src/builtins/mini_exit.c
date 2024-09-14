@@ -6,7 +6,7 @@
 /*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 23:02:46 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/06 22:29:47 by tlaukat          ###   ########.fr       */
+/*   Updated: 2024/09/12 20:09:09 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 void	free_tools(t_tools *tools)
 {
+	free_arr(tools->export);
 	free_arr(tools->paths);
 	free_arr(tools->envp);
-	free_arr(tools->export);
 	free(tools->args);
 	ft_simple_cmdsclear(&tools->simple_cmds);
 	free(tools->pwd);

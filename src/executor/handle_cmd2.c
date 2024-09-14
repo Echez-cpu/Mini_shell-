@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pokpalae <pokpalae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlaukat <tlaukat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:43:42 by pokpalae          #+#    #+#             */
-/*   Updated: 2024/09/10 17:53:52 by pokpalae         ###   ########.fr       */
+/*   Updated: 2024/09/14 16:00:25 by tlaukat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static int	handle_exit_status(int status)
 	if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
-		if (sig == SIGINT)
+		if (sig == SIGINT || sig == SIGQUIT)
 		{
-			gs_error_num(130);
-			return (130);
+			gs_error_num(128 + sig);
+			return (128 + sig);
 		}
 	}
 	if (WIFEXITED(status))
