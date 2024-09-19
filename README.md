@@ -1,9 +1,9 @@
 
-TABLE OF CONTENTS
+*TABLE OF CONTENTS*
 
 
 
-THE CHALLENGE
+*THE CHALLENGE*
 
 
 What Is Bash and How Does It Work?
@@ -80,7 +80,7 @@ typedef struct s_lexer
 
 Each node contains either a char * containing the word or a t_token. We also assign each node an index so that we can easily delete them later.
 
-THE PARSER
+*THE PARSER*
 
 
 
@@ -107,7 +107,7 @@ This process is repeated until the end of the lexer list.
 
 
 
-BUILTINS
+*BUILTINS*
 
 
 We handle builtins, as discussed above through storing a function pointer in the t_simple_cmds. We achieve this by sending the the first word of a command to a function builtin_arr which loops through a static array of the different builtin functions. If it finds a corresponding function it returns it to the parser, else it returns NULL. For me, this was a way to learn about function pointers, which I had never worked with before. Also by determining the builtin at the parser stage, it greatly simplifies the executor as executing the builtin requires just two lines of code:   
@@ -145,27 +145,29 @@ Removes the variable name from the environment.
 
 
 
-EXECUTOR
+*EXECUTOR*
 
 
 
 
 When the parser returns the t_simple_cmds list back to minishell_loop, a simple check is done to determine how many commands there are, as they are handled by different functions. However, with the exception of a few builtins, the commands are ultimately executed by the same function handle_cmd, which finds, and if successful, executes the command.
 
-Expander
+*Expander*
 
 Before a node from t_simple_cmds is handled it is expanded. The expander takes variables, identified by $, and replaces them with their value from the environment variables. Such that $USER becomes pokpalae, and $? is replaced with the exit code.
 
-Heredoc
+*Heredoc*
 
 Before creating a child process, the parent process executes heredocs. We handled heredocs by creating a temporary file to write the input to. The filename is stored in the related t_simple_cmds node so that it can be used to replace STDIN. If there are multiple heredocs in a single t_simple_cmds node, then the file name ultimately stored would be that of the last heredoc. Using a file comes with limitations and security issues however we felt it was the simplest way dealing with it, and is close to how bash does it.
 
-Single Command
+*Single Command*
 
 Like in bash, builtin commands, specifically cd, exit, export, and unset cannot be run in a separate process, as then the environmentally variable cannot be properly altered. If there is only one command, and it is one of the aforementioned builtins, it is executed in the parent process and the function returns back to the minishell_loop. If the command is not a builtin the single command function creates a new process and sends the command to handle_cmd.
 
-Multiple Commands
+*Multiple Commands*
+
 If there are multiple commands, the executor loops through each t_simple_cmds node and creates a child process for it using fork(), and using pipe() creates a pipe in order to send the output of one command as the input to the next. Checkout pipex to learn more about these functions.
+
 
 Essentially for each command the following happens:
 
@@ -180,14 +182,14 @@ handle_cmd finds and executes the command.
 end[0] is stored for the next command.
 The parent process then waits for all the children to end, then returns back to the minishell_loop.
 
-Reset
+*Reset*
 The program then does a full reset, freeing all nodes that have not been freed or deleted yet, and resets various variables so that the program can start again by displaying a new prompt.
 
 
 
 
 
-Run Minishell
+*Run Minishell*
 
 ./minishell
 
