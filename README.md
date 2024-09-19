@@ -1,12 +1,14 @@
-𝐓𝐇𝐄 𝐏𝐀𝐑𝐒𝐄𝐑
-*TABLE OF CONTENTS*
+
+^𝙏𝘼𝘽𝙇𝙀 𝙊𝙁 𝘾𝙊𝙉𝙏𝙀𝙉𝙏𝙎^
 
 
 
-*THE CHALLENGE*
+
+𝙏𝙃𝙀 𝘾𝙃𝘼𝙇𝙇𝙀𝙉𝙂𝙀
+
+𝑾𝒉𝒂𝒕 𝑰𝒔 𝑩𝒂𝒔𝒉 𝒂𝒏𝒅 𝑯𝒐𝒘 𝑫𝒐𝒆𝒔 𝑰𝒕 𝑾𝒐𝒓𝒌?
 
 
-What Is Bash and How Does It Work?
 Implementation
 The Lexer
 The Parser
@@ -80,7 +82,7 @@ typedef struct s_lexer
 
 Each node contains either a char * containing the word or a t_token. We also assign each node an index so that we can easily delete them later.
 
-*THE PARSER*
+𝐓𝐇𝐄 𝐏𝐀𝐑𝐒𝐄𝐑
 
 
 
@@ -107,7 +109,7 @@ This process is repeated until the end of the lexer list.
 
 
 
-*BUILTINS*
+^𝘽𝙐𝙄𝙇𝙏𝙄𝙉𝙎^
 
 
 We handle builtins, as discussed above through storing a function pointer in the t_simple_cmds. We achieve this by sending the the first word of a command to a function builtin_arr which loops through a static array of the different builtin functions. If it finds a corresponding function it returns it to the parser, else it returns NULL. For me, this was a way to learn about function pointers, which I had never worked with before. Also by determining the builtin at the parser stage, it greatly simplifies the executor as executing the builtin requires just two lines of code:   
@@ -145,7 +147,7 @@ Removes the variable name from the environment.
 
 
 
-*EXECUTOR*
+^𝙀𝙓𝙀𝘾𝙐𝙏𝙊𝙍^
 
 
 
@@ -189,7 +191,7 @@ The program then does a full reset, freeing all nodes that have not been freed o
 
 
 
-*Run Minishell*
+^𝑹𝒖𝒏 𝑴𝒊𝒏𝒊𝒔𝒉𝒆𝒍𝒍^
 
 ./minishell
 
