@@ -77,6 +77,8 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 		ret = specific_path(tools, "HOME=");
 	else if (ft_strncmp(simple_cmd->str[1], "-", 1) == 0)
 		ret = specific_path(tools, "OLDPWD=");
+		else if (simple_cmd->str[2])
+			return (ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO), EXIT_FAILURE);
 	else
 	{
 		ret = chdir(simple_cmd->str[1]);
