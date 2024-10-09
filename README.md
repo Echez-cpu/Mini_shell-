@@ -10,19 +10,28 @@
 
 
 Implementation
+
 The Lexer
+
 The Parser
+
 Builtins
+
 Executor
+
 Expander
+
 Heredoc
+
 Single Command
+
 Multiple Commands
+
 Reset
 
 
-My Take Away
 Installation
+
 The Challenge
 This was probably the biggest project I've done so far, as well as the first one I did as a group. The goal was to create a mini version of bash, I say mini but it was still a huge project. We had to learn how bash takes arguments, parses them, and executes them. We had to incorporate the following features:
 
